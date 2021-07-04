@@ -4,6 +4,7 @@ import com.lockers.lockedme.util.Constants;
 import com.lockers.lockedme.util.Util;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.Locale;
 
@@ -77,7 +78,7 @@ public class Main {
         {
             int option = Util.getIntegerUserInput(Constants.OPTION_SELECT_MESSAGE);
 
-            if(option<=0 || option > Constants.OPTIONS.length)
+            if(option<=0 || option > Constants.FILE_OPTIONS.length)
             {
                 throw new Exception(Constants.INVALID_INPUT);
             }
@@ -88,13 +89,77 @@ public class Main {
         catch (Exception e)
         {
             Util.displayMessage(Constants.INVALID_INPUT+", select a valid option");
-            askUserForInput();
+            performFileOperation();
         }
     }
 
     private static void performFileAction(int action)
     {
 
+        File directoryPath = new File(navigateToWorkingDirectory());
+        String contents[] = directoryPath.list();
+
+        if(contents==null)
+        {
+            Util.displayMessage(Constants.INVALID_INPUT+" , you entered an invalid path");
+            performFileAction(action);
+        }
+        else
+        {
+            switch (action)
+            {
+                case 1: createNewFile(directoryPath);
+                        break;
+                case 2: deleteFileFromDirectory(directoryPath);
+                        break;
+                case 3: searchForFileName(directoryPath);
+                        break;
+                default: Util.displayMessage(Constants.INVALID_INPUT);
+                        break;
+            }
+
+        }
+
+    }
+
+    private static void createNewFile(File directory) {
+        String filename = getFileName();
+
+        Util.displayMessage(new File(directory.getAbsolutePath(),filename).getAbsolutePath());
+        try {
+
+            boolean newfile = new File(directory.getAbsolutePath(),filename).createNewFile();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+
+        return;
+
+    }
+
+    private static void deleteFileFromDirectory(File directory)
+    {
+        String filename = getFileName();
+    }
+
+    private static void searchForFileName(File directory)
+    {
+        String filename = getFileName();
+
+    }
+
+    private static String getFileName()
+    {
+        try {
+            return Util.getStringUserInput(Constants.ASK_FILENAME);
+        }
+        catch (Exception e)
+        {
+            Util.displayMessage(Constants.SERVER_ERROR);
+            return getFileName();
+        }
     }
 
 
@@ -112,7 +177,7 @@ public class Main {
 
         if(contents==null)
         {
-            Util.displayMessage(Constants.INVALID_INPUT+" , you entered invalid path");
+            Util.displayMessage(Constants.INVALID_INPUT+" , you entered an invalid path");
             askForRetryPathName();
         }
         else if(contents.length==0)

@@ -25,6 +25,7 @@ public abstract class Constants {
             "2. Delete file from directory",
             "3. Search for file"};
 
+    public static final String ASK_FILENAME="Enter the filename";
     public static final String TASK_EXECUTION_OVER="Task execution over";
     public static final String OPTION_SELECT_MESSAGE= "Please select the number corresponding to the action you want  to perform";
 }
