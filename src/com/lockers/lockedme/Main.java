@@ -4,6 +4,7 @@ import com.lockers.lockedme.util.Constants;
 import com.lockers.lockedme.util.Util;
 
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -140,7 +141,7 @@ public class Main {
            else
                Util.displayMessage(Constants.FILE_CREATED);
         }
-        catch (AccessDeniedException e)
+        catch (IOException e)
         {
             Util.displayMessage(Constants.ACCESS_DENIED_EXCEPTION);
         }
