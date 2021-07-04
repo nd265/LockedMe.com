@@ -178,6 +178,12 @@ public class Main {
 
         List<String> macthingFiles = new ArrayList<>();
 
+        if(macthingFiles.isEmpty())
+        {
+            Util.displayMessage(Constants.EMPTY_DIRECTORY);
+            return;
+        }
+
         for(File file : contents)
         {
             if(file.isFile() && file.getName().startsWith(filename))
