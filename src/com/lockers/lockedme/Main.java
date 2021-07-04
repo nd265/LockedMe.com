@@ -5,6 +5,7 @@ import com.lockers.lockedme.util.Util;
 
 import java.io.File;
 import java.util.Arrays;
+import java.util.Locale;
 
 public class Main {
 
@@ -61,6 +62,7 @@ public class Main {
                     askUserForInput();
                     break;
         }
+        Util.displayMessage(Constants.TASK_EXECUTION_OVER);
         askUserForInput();
     }
 
@@ -111,6 +113,7 @@ public class Main {
         if(contents==null)
         {
             Util.displayMessage(Constants.INVALID_INPUT+" , you entered invalid path");
+            askForRetryPathName();
         }
         else if(contents.length==0)
         {
@@ -128,6 +131,27 @@ public class Main {
         }
         Util.displayMessage("\n");
     }
+
+    private static void askForRetryPathName()
+    {
+        try {
+
+            String option = Util.getStringUserInput(Constants.ASK_RETRY_FOLDER);
+
+            if(option.equals("y")||option.equals("Y"))
+            {
+                displayFilesAndFolders();
+            }
+
+        }
+        catch (Exception e)
+        {
+            askForRetryPathName();
+        }
+
+
+    }
+
 
     private static String navigateToWorkingDirectory()
     {

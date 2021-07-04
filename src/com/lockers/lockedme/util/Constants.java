@@ -10,19 +10,21 @@ public abstract class Constants {
     public static final String SERVER_ERROR="Error processing input , please try again";
 
     public static final String ASK_WORKING_DIRECTORY="Please enter path of the directory, leave blank for current";
+    public static final String ASK_RETRY_FOLDER ="Do you want to retry the path ? (y/n)";
     public static final String EMPTY_DIRECTORY ="Empty directory ";
     public static final String DISPLAY_MESSAGE= "List of files and directories in the specified directory:";
-    public static final String EXIT_MESSAGE="Exiting application..";
 
+    public static final String EXIT_MESSAGE="Exiting application..";
     public static final String[] OPTIONS = new String[]{
             "1. Get all the files in folder",
             "2. Perform file operations",
             "3. Exit"};
 
     public static final String[] FILE_OPTIONS = new String[]{
-            "1. Get all the files in folder",
-            "2. Perform file operations",
-            "3. Exit"};
+            "1. Add files to directory",
+            "2. Delete file from directory",
+            "3. Search for file"};
 
+    public static final String TASK_EXECUTION_OVER="Task execution over";
     public static final String OPTION_SELECT_MESSAGE= "Please select the number corresponding to the action you want  to perform";
 }
