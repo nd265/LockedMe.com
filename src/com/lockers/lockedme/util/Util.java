@@ -25,4 +25,12 @@ public abstract class Util {
     {
         System.out.println(message);
     }
+
+    public static boolean isStringOnlyAlphabet(String str)
+    {
+        return ((!str.equals(""))
+                && (str != null)
+                && (str.matches("^[a-zA-Z]*$")));
+    }
+
 }
