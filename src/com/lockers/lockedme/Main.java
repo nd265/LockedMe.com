@@ -4,9 +4,10 @@ import com.lockers.lockedme.util.Constants;
 import com.lockers.lockedme.util.Util;
 
 import java.io.File;
-import java.io.IOException;
+import java.nio.file.AccessDeniedException;
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Locale;
+import java.util.List;
 
 public class Main {
 
@@ -82,8 +83,12 @@ public class Main {
             {
                 throw new Exception(Constants.INVALID_INPUT);
             }
-
-            performFileAction(option);
+            else if(option==Constants.FILE_OPTIONS.length)
+            {
+                askUserForInput();
+            }
+            else
+                performFileAction(option);
 
         }
         catch (Exception e)
@@ -95,6 +100,7 @@ public class Main {
 
     private static void performFileAction(int action)
     {
+
 
         File directoryPath = new File(navigateToWorkingDirectory());
         String contents[] = directoryPath.list();
@@ -125,28 +131,66 @@ public class Main {
     private static void createNewFile(File directory) {
         String filename = getFileName();
 
-        Util.displayMessage(new File(directory.getAbsolutePath(),filename).getAbsolutePath());
         try {
 
-            boolean newfile = new File(directory.getAbsolutePath(),filename).createNewFile();
+           if(!new File(directory.getAbsolutePath(),filename).createNewFile())
+           {
+               throw new Exception("Duplicate resource");
+           }
+           else
+               Util.displayMessage(Constants.FILE_CREATED);
+        }
+        catch (AccessDeniedException e)
+        {
+            Util.displayMessage(Constants.ACCESS_DENIED_EXCEPTION);
         }
         catch (Exception e)
         {
-            e.printStackTrace();
+            Util.displayMessage(Constants.SERVER_ERROR+" , unable to create file make sure file doesn't exist");
         }
-
-        return;
 
     }
 
     private static void deleteFileFromDirectory(File directory)
     {
+
         String filename = getFileName();
+        try {
+
+            if(!new File(directory.getAbsolutePath(),filename).delete())
+            {
+                Util.displayMessage(Constants.FILE_NOT_FOUND);
+            }
+            else
+                Util.displayMessage(Constants.FILE_DELETED);
+        } catch (Exception e)
+        {
+            Util.displayMessage(Constants.SERVER_ERROR);
+        }
     }
 
     private static void searchForFileName(File directory)
     {
         String filename = getFileName();
+
+        File[] contents = directory.listFiles();
+
+        List<String> macthingFiles = new ArrayList<>();
+
+        for(File file : contents)
+        {
+            if(file.isFile() && file.getName().startsWith(filename))
+            {
+                macthingFiles.add(file.getName());
+            }
+        }
+
+        Util.displayMessage(Constants.DISPLAY_FILE_LIST_MESSAGE);
+
+        for(String file: macthingFiles)
+        {
+            Util.displayMessage(file);
+        }
 
     }
 
@@ -186,7 +230,7 @@ public class Main {
         }
         else
         {
-            Util.displayMessage(Constants.DISPLAY_MESSAGE);
+            Util.displayMessage(Constants.DISPLAY_LIST_MESSAGE);
 
             Arrays.sort(contents);
 
