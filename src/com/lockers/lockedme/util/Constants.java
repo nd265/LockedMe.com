@@ -12,6 +12,7 @@ public abstract class Constants {
     public static final String ASK_WORKING_DIRECTORY="Please enter path of the directory, leave blank for current";
     public static final String ASK_RETRY_FOLDER ="Do you want to retry the path ? (y/n)";
     public static final String EMPTY_DIRECTORY ="Empty directory ";
+    public static final String EMPTY_MATCH_LIST ="No files matched the given input";
     public static final String DISPLAY_LIST_MESSAGE = "List of files and directories in the specified directory:";
     public static final String DISPLAY_FILE_LIST_MESSAGE = "List of files  in the specified directory:";
 

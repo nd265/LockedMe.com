@@ -221,12 +221,6 @@ public class Main {
 
         List<String> macthingFiles = new ArrayList<>();
 
-        if(macthingFiles.isEmpty())
-        {
-            Util.displayMessage(Constants.EMPTY_DIRECTORY);
-            return;
-        }
-
         for(File file : contents)
         {
             // Since we want to show only the files and not the directories which start with the name user provides
@@ -236,6 +230,14 @@ public class Main {
                 macthingFiles.add(file.getName());
             }
         }
+
+        if(macthingFiles.isEmpty())
+        {
+            Util.displayMessage(Constants.EMPTY_MATCH_LIST);
+            return;
+        }
+
+
         Util.displayMessage(Constants.DISPLAY_FILE_LIST_MESSAGE);
         // We want to display the files in the ascending order
         Collections.sort(macthingFiles);
