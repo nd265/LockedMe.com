@@ -8,16 +8,35 @@ import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 public class Main {
 
+
     public static void main(String[] args) {
 
+        createUserInputEnumMapping();
         Util.displayMessage(Constants.USER_WELCOME_MESSAGE);
         Util.displayMessage(Constants.LOCKED_ME_DETAILS);
         getUserDetails();
         askUserForInput();
+
+    }
+
+    private static void createUserInputEnumMapping()
+    {
+        Util.mainContextOptionHashMap = new HashMap<>();
+        Util.fileManipulationOptionHashMap = new HashMap<>();
+
+        Util.mainContextOptionHashMap.put(1, Util.MainContextOption.DISPLAY_FILES_AND_FOLDERS);
+        Util.mainContextOptionHashMap.put(2, Util.MainContextOption.FILE_MANIPULATION);
+        Util.mainContextOptionHashMap.put(3, Util.MainContextOption.EXIT_APPLICATION);
+
+        Util.fileManipulationOptionHashMap.put(1, Util.FileManipulationOption.CREATE_FILE);
+        Util.fileManipulationOptionHashMap.put(2, Util.FileManipulationOption.DELETE_FILE);
+        Util.fileManipulationOptionHashMap.put(3, Util.FileManipulationOption.SEARCH_FILE);
+        Util.fileManipulationOptionHashMap.put(4, Util.FileManipulationOption.BACK_TO_MAIN_CONTEXT);
 
     }
 
@@ -39,7 +58,7 @@ public class Main {
                 throw new Exception(Constants.INVALID_INPUT);
             }
 
-            performAction(option);
+            performAction(Util.mainContextOptionHashMap.get(option));
 
         }
         catch (Exception e)
@@ -50,16 +69,15 @@ public class Main {
 
     }
 
-    private static void performAction(int option)
+    private static void performAction(Util.MainContextOption option)
     {
         switch (option)
         {
-            case 1: displayFilesAndFolders();
+            case DISPLAY_FILES_AND_FOLDERS: displayFilesAndFolders();
                     break;
-
-            case 2: performFileOperation();
+            case FILE_MANIPULATION: performFileOperation();
                     break;
-            case 3: shutdownApplication();
+            case EXIT_APPLICATION: shutdownApplication();
                     break;
             default:Util.displayMessage(Constants.INVALID_INPUT+", select a valid option");
                     askUserForInput();
@@ -84,12 +102,12 @@ public class Main {
             {
                 throw new Exception(Constants.INVALID_INPUT);
             }
-            else if(option==Constants.FILE_OPTIONS.length)
+            else if(Util.fileManipulationOptionHashMap.get(option)==Util.FileManipulationOption.BACK_TO_MAIN_CONTEXT)
             {
                 askUserForInput();
             }
             else
-                performFileAction(option);
+                performFileAction(Util.fileManipulationOptionHashMap.get(option));
 
         }
         catch (Exception e)
@@ -99,7 +117,7 @@ public class Main {
         }
     }
 
-    private static void performFileAction(int action)
+    private static void performFileAction(Util.FileManipulationOption action)
     {
 
 
@@ -115,12 +133,14 @@ public class Main {
         {
             switch (action)
             {
-                case 1: createNewFile(directoryPath);
+                case CREATE_FILE: createNewFile(directoryPath);
                         break;
-                case 2: deleteFileFromDirectory(directoryPath);
+                case DELETE_FILE: deleteFileFromDirectory(directoryPath);
                         break;
-                case 3: searchForFileName(directoryPath);
+                case SEARCH_FILE: searchForFileName(directoryPath);
                         break;
+
+
                 default: Util.displayMessage(Constants.INVALID_INPUT);
                         break;
             }
